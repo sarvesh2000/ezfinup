@@ -1,0 +1,22 @@
+https://plotly.com/python/hover-text-and-formatting/
+https://plotly.com/python/interactive-html-export/
+
+https://www.programcreek.com/python/example/92135/pandas_datareader.data.get_data_yahoo
+
+
+use this page for yahoo stocks api:
+https://rapidapi.com/apidojo/api/yahoo-finance1
+
+pass this api:
+http://127.0.0.1:5000/?start=2019-11-29&end=2020-09-17&symbol=AMZN
+
+My Key: 483bd89d87mshce534f1bd4ba6b0p182fcdjsnf08d8fc19c04
+
+
+Format to pass: 
+pdr.get_data_yahoo(ticker, start=date_start, end=date_end)
+
+
+Use this to learn:
+
+https://www.analyticsvidhya.com/blog/2018/10/predicting-stock-price-machine-learningnd-deep-learning-techniques-python/

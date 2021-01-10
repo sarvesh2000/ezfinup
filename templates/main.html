@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+	<!-- CSS file -->
+	<link rel="stylesheet" href="{{ url_for('static',filename='styles/main.css') }}">
+
+
+
+	<title>Stock Prediction</title>
+</head>
+
+<body>
+	<!-- <h1>This is a Stock Prediction Page</h1> -->
+	<!-- Navbar-->
+	<header class="header">
+		<nav class="navbar navbar-expand-lg fixed-top py-3">
+			<div class="container"><a href="{{url_for('home')}}"
+					class="navbar-brand text-uppercase font-weight-bold">Stock Prediction</a>
+				<button type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+					aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+					class="navbar-toggler navbar-toggler-right"><i class="fa fa-bars"></i></button>
+
+				<div id="navbarSupportedContent" class="collapse navbar-collapse">
+					<ul class="navbar-nav ml-auto">
+						<li class="nav-item active"><a href="{{url_for('home')}}"
+								class="nav-link text-uppercase font-weight-bold">Home <span
+									class="sr-only">(current)</span></a></li>
+						<li class="nav-item"><a href="#" class="nav-link text-uppercase font-weight-bold">About</a></li>
+						<li class="nav-item"><a href="{{url_for('news')}}"
+								class="nav-link text-uppercase font-weight-bold">News</a></li>
+						<li class="nav-item"><a href="{{url_for('search')}}"
+								class="nav-link text-uppercase font-weight-bold">Search</a></li>
+						<li class="nav-item"><a href="#" class="nav-link text-uppercase font-weight-bold">Markets</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
+
+	<div class="container">
+		<div class="pt-5 text-white">
+			<header class="py-5 mt-5">
+				<h1 class="display-4 text-center">Stock Market Prediction by Using LSTM</h1>
+
+
+				<div class="container">
+
+					<div class="d-flex justify-content-around align-items-center" style="height: 200px;">
+						<button class="btn btn-warning btn-large"><a href="{{url_for('static',filename='graph.html')}}">
+								Current trends of the company</a></button>
+						<button class="btn btn-warning btn-large mx-5"><a
+								href="{{url_for('static',filename='volume.html')}}">Volume of the company</a></button>
+						<button class="btn btn-warning btn-large">
+							<a href="{{url_for('predictedIdea')}}">Prediction Graph</a></button>
+						<!-- <p class="lead mb-0"><a href="{{url_for('static',filename='graph.html')}}">Click Me to See the Current trends</a></p>
+					  <p class="lead mb-0"><a href="{{url_for('static',filename='volume.html')}}">Click Me to See the Volume of the company</a></p> -->
+					</div>
+				</div>
+
+
+			</header>
+			<h2 class="display-5">NOTE:</h2>
+			<div class="pb-5" style="text-align:justify">
+				<ul>
+					<li class="lead pb-5">The investor may choose not to invest all of their funds into a single company
+						lest that company takes unexpected turn.
+					</li>
+					<li class="lead">A more common approach would be for an investor to 3 invest across a broad range of
+						stocks based on some criteria he has decided on before.
+					</li>
+				</ul>
+			</div>
+			<div class="pb-5" style="text-align:justify">
+				<ul>
+					<li class="lead pb-5">This project will focus exclusively on predicting the daily trend (price
+						movement) of individual stocks.
+					</li>
+					<li class="lead">The project will make no attempt to deciding how much money to allocate to each
+						prediction. More so, the project will analyse the accuracies of these predictions.</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+		crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+		crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+		crossorigin="anonymous"></script>
+
+	<!-- JS File -->
+	<script>
+		$(function () {
+			$(window).on('scroll', function () {
+				if ($(window).scrollTop() > 10) {
+					$('.navbar').addClass('active');
+				} else {
+					$('.navbar').removeClass('active');
+				}
+			});
+		});
+	</script>
+</body>
+
+</html>
