@@ -255,10 +255,22 @@ def search():
 @app.route('/about')
 def about():
     return render_template('about.html')
+
+@app.route('/dashboard')
+def dashboard():
+    return  render_template('Dashboard2.html')
+
+@app.route('/login')
+def login():
+    return render_template('login.html')
+
+@app.route('/signup')
+def signup():
+    return  render_template('create-acc.html')
     
    
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
 
 
 
