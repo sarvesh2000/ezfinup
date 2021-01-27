@@ -36,7 +36,7 @@
                 <ul id="myMenu">
                     <li><a href="#">NIFTY 50</a></li>
                     <li><a href="#">SENSEX</a></li>
-                    <li><a href="#">YESBANK</a></li>
+                    <li><a href="#" onclick="getReliance()">RELIANCE</a></li>
                     <li><a href="#" onclick="getIdea()">IDEA</a></li>
                     <li><a href="#">AAPL</a></li>
                 </ul>
@@ -137,7 +137,19 @@
         }
         function getIdea(){
             console.log("Clicked IDEA");
-            $.ajax({url: "http://35.232.169.155/?stockname=IDEA.NS",
+            $.ajax({url: "http://35.232.30.55/?stockname=IDEA.NS",
+                    success: function(result){
+                                // $("#graph").html(result);
+                                showGraph(result);
+                    },
+                    fail: function(error){
+                            console.log("Error:",error);
+                    }
+            });
+        }
+        function getReliance(){
+            console.log("Clicked RELIANCE");
+            $.ajax({url: "http://35.232.30.55/?stockname=RELIANCE.NS",
                     success: function(result){
                                 // $("#graph").html(result);
                                 showGraph(result);

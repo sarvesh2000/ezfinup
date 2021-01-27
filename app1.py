@@ -208,7 +208,7 @@ def display(start,end,symbol):
 app = Flask(__name__)
 @app.route('/')
 def home():
-    return render_template('hme.html')
+    return render_template('index.html')
 
 @app.route("/sid/" , methods=["post"])
 def hello():
