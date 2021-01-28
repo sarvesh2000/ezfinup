@@ -45,9 +45,13 @@
 
             <!-- Right side main content -->
             <div class="right">
-                <h2>Prediction Graph</h2>
-                <div class="container" id="graph">
-                HI
+                <div class="container">
+                  <h2>Prediction Graph</h2>
+                  <div class="container" id="graph"></div>
+                </div>
+                <div class="container">
+                  <h2>Buy & Sell Signals</h2>
+                  <div class="container" id="chartContainer"></div>
                 </div>
             </div>
         </div>
@@ -69,6 +73,100 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <!--  Stock Chart  -->
     <script src="{{ url_for('static',filename='JS/jquery.canvasjs.stock.min.js') }}"></script>
+    <!--  Custom Script to show Algo Trading  -->
+    <script>
+        function generateAlgo(data){
+            var data1 = [];
+            var data2 = [];
+            var data3 = [];
+            var data4 = [];
+            var data5 = [];
+            var min = new Date(data.dates[0]);
+            var max = new Date(data.dates[data.dates.length-1]);
+            console.log("Algo Data", data);
+            for(var i = 0; i < data.price.length; i++){
+                data1.push({x: new Date(data.dates[i]), y: data.price[i]});
+                if(data.SMA30[i] == "NONE")
+                  data2.push({x: new Date(data.dates[i]), y: data.price[i]});
+                else
+                  data2.push({x: new Date(data.dates[i]), y: data.SMA30[i]});
+                if(data.SMA100[i] == "NONE")
+                  data3.push({x: new Date(data.dates[i]), y: data.price[i]});
+                else
+                  data3.push({x: new Date(data.dates[i]), y: data.SMA100[i]});
+                if(data.buy_point[i] != "NONE")
+                  data4.push({x: new Date(data.dates[i]), y: data.buy_point[i]})
+                if(data.sell_point[i] != "NONE")
+                  data5.push({x: new Date(data.dates[i]), y: data.sell_point[i]})
+            }
+            var stockChart1 = new CanvasJS.StockChart("chartContainer",{
+                title:{
+                  text:"Technical Indicators"
+                },
+                // subtitles: [{
+                // text: "Mouse over Technical Indicator Menu to Add SMA, EMA and MACD",
+                // fontSize: 12
+                // }],
+                theme: "light2",
+                exportEnabled: true,
+                charts: [{
+                  axisY: {
+                    prefix: "₹"
+                  },
+                  legend: {
+                    verticalAlign: "top",
+                    horizontalAlign: "left",
+                    cursor: "pointer"
+                  },
+                  toolTip: {
+                    shared: true
+                  },
+                  data: [{
+                    type: "line",
+                    showInLegend: true,
+                    name: "Stock Price",
+                    yValueFormatString: "₹#,###.00",
+                    dataPoints : data1
+                  },{
+                  type: "line",
+                    showInLegend: true,
+                    name: "SMA 30",
+                    yValueFormatString: "₹#,###.00",
+                    dataPoints : data2
+                  },
+                {
+                  type: "line",
+                    showInLegend: true,
+                    name: "SMA 100",
+                    yValueFormatString: "₹#,###.00",
+                    dataPoints : data3
+                  },
+                  { markerType: "triangle",  //"circle", "square", "cross", "none"
+                    showInLegend: true,
+                    name: "Buy",
+                    type: "scatter",
+                    dataPoints: data4
+                  },
+                  { markerType: "triangle",  //"circle", "square", "cross", "none"
+                    showInLegend: true,
+                    name: "Sell",
+                    type: "scatter",
+                    dataPoints: data5
+                  }],
+                }],
+                navigator: {
+                  data: [{
+                    dataPoints: data1
+                  }],
+                  slider: {
+                    minimum: min,
+                    maximum: max
+                  }
+                }
+              });
+            stockChart1.render();
+        }
+    </script>
     <!--  Custom Script to call and get Prediction from Cloud  -->
     <script>
         function showGraph(data){
@@ -113,12 +211,6 @@
               enabled:false
             }
           });
-          // $.getJSON("https://canvasjs.com/data/gallery/stock-chart/grocery-sales.json", function(data) {
-          //   for(var i = 0; i < data.length; i++){
-          //     dataPoints.push({x: new Date(data[i].date), y: Number(data[i].sale)});
-          //   }
-          //   stockChart.render();
-          // });
           var dat = data["data"];
           console.log("DAT ",dat);
           for(var i = 0; i < dat[0]["x"].length; i++){
@@ -146,6 +238,16 @@
                             console.log("Error:",error);
                     }
             });
+            console.log("2nd Call");
+            $.ajax({url: "http://34.70.172.158:5000/?stockname=IDEA.NS",
+                    success: function(result){
+                       console.log("2nd result ", result);
+                      generateAlgo(result)
+                    },
+                    fail: function(error){
+                            console.log("Error:",error);
+                    }
+            });
         }
         function getReliance(){
             console.log("Clicked RELIANCE");
@@ -153,6 +255,16 @@
                     success: function(result){
                                 // $("#graph").html(result);
                                 showGraph(result);
+                    },
+                    fail: function(error){
+                            console.log("Error:",error);
+                    }
+            });
+            $.ajax({url: "http://34.70.172.158:5000/?stockname=RELIANCE.NS",
+                    success: function(result){
+                                console.log("2nd Result ", result);
+                                // $("#graph").html(result);
+                                generateAlgo(result);
                     },
                     fail: function(error){
                             console.log("Error:",error);
