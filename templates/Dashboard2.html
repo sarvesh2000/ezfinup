@@ -46,12 +46,10 @@
         <div class="container-fluid">
           <div class="row">
             <div class="col-lg-12">
-              <h2>Prediction Graph</h2>
               <div id="graph" style="width: 100%; height: 500px; display: inline-block;"></div>
             </div>
             <br>
             <div class="col-lg-12">
-              <h2>Buy and Sell Signals</h2>
               <div id="chartContainer" style="width: 100%; height: 500px; display: inline-block;"></div>
             </div>
           </div>
@@ -76,9 +74,10 @@
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <!--  Stock Chart  -->
   <script src="{{ url_for('static',filename='JS/jquery.canvasjs.stock.min.js') }}"></script>
-  <!--  Custom Script to show Algo Trading  -->
+  <!-- Moment js for date manipulation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js" integrity="sha512-LGXaggshOkD/at6PFNcp2V2unf9LzFq6LE+sChH7ceMTDP0g2kn6Vxwgg7wkPP7AAtX+lmPqPdxB47A0Nz0cMQ==" crossorigin="anonymous"></script>  <!--  Custom Script to show Algo Trading  -->
   <script>
-    function generateAlgo(data) {
+    function generateAlgo(data, name) {
       var data1 = [];
       var data2 = [];
       var data3 = [];
@@ -102,9 +101,10 @@
         if (data.sell_point[i] != "NONE")
           data5.push({ x: new Date(data.dates[i]), y: data.sell_point[i] })
       }
+      chartTitle = "Buy and Sell signals for " + name;
       var stockChart1 = new CanvasJS.StockChart("chartContainer", {
         title: {
-          text: "Technical Indicators"
+          text: chartTitle
         },
         // subtitles: [{
         // text: "Mouse over Technical Indicator Menu to Add SMA, EMA and MACD",
@@ -174,16 +174,16 @@
   </script>
   <!--  Custom Script to call and get Prediction from Cloud  -->
   <script>
-    function showGraph(data) {
+    function showGraph(data, name) {
+      var chartTitle = "Price Prediction of " + name + " for the upcoming three days";
       var dataPoints = [];
+      var data2 = [];
+      var dat = data["data"];
       var stockChart = new CanvasJS.StockChart("graph", {
         exportEnabled: true,
         title: {
-          text: "StockChart with Line using JSON Data"
+          text: chartTitle
         },
-        subtitles: [{
-          text: "Total Retail Sales of ACME "
-        }],
         charts: [{
           axisX: {
             crosshair: {
@@ -203,32 +203,42 @@
           },
           data: [{
             type: "line",
-            xValueFormatString: "##",
+            xValueFormatString: "dd/mm/yyyy",
             yValueFormatString: "₹#,###.##",
             dataPoints: dataPoints
+          },
+          {
+            type: "line",
+            showInLegend: true,
+            name: "Predicted Price",
+            yValueFormatString: "₹#,###.00",
+            dataPoints: data2
           }]
         }],
         navigator: {
-          // slider: {
-          //   minimum: new Date(2010, 00, 01),
-          //   maximum: new Date(2018, 00, 01)
-          // }
-          enabled: false
+          slider: {
+            minimum: moment().subtract((103-dat[0]["x"][0]), 'days').toDate(),
+            maximum: moment().subtract((103-dat[0]["y"][(dat[0]["y"].length)-1]), 'days').toDate()
+          },
+          enabled: true
         }
       });
-      var dat = data["data"];
       console.log("DAT ", dat);
       for (var i = 0; i < dat[0]["x"].length; i++) {
         for (var j = 0; j < dat[1]["x"][i].length; j++) {
-          dataPoints.push({ x: dat[0]["x"][i], y: dat[1]["x"][i][j] });
+          date = new Date(moment().subtract((103-dat[0]["x"][i]), 'days').toDate());
+          dataPoints.push({ x: date, y: dat[1]["x"][i][j] });
         }
         console.log("Datapoints", dataPoints);
       }
-      for (var i = 0; i < dat[0]["y"].length; i++) {
-        for (var j = 0; j < dat[1]["y"][i].length; j++) {
-          dataPoints.push({ x: dat[0]["y"][i], y: dat[1]["y"][i][j] });
+      for (var i = (dat[0]["y"].length)-1; i >= 0; i--) {
+        for (var j = (dat[1]["y"][i].length)-1; j >= 0; j--) {
+          date = new Date(moment().subtract((103-dat[0]["y"][i]), 'days').toDate());
+          data2.push({ x: date, y: dat[1]["y"][i][j] });
         }
         console.log("Datapoints", dataPoints);
+        console.log("Data 2", data2);
+
       }
       stockChart.render();
     }
@@ -238,7 +248,7 @@
         url: "http://35.232.30.55/?stockname=IDEA.NS",
         success: function (result) {
           // $("#graph").html(result);
-          showGraph(result);
+          showGraph(result, "IDEA NSE");
         },
         fail: function (error) {
           console.log("Error:", error);
@@ -249,7 +259,7 @@
         url: "http://34.70.172.158:5000/?stockname=IDEA.NS",
         success: function (result) {
           console.log("2nd result ", result);
-          generateAlgo(result)
+          generateAlgo(result, "IDEA NSE")
         },
         fail: function (error) {
           console.log("Error:", error);
@@ -262,7 +272,7 @@
         url: "http://35.232.30.55/?stockname=RELIANCE.NS",
         success: function (result) {
           // $("#graph").html(result);
-          showGraph(result);
+          showGraph(result, "RELIANCE NSE");
         },
         fail: function (error) {
           console.log("Error:", error);
@@ -273,7 +283,7 @@
         success: function (result) {
           console.log("2nd Result ", result);
           // $("#graph").html(result);
-          generateAlgo(result);
+          generateAlgo(result, "RELIANCE NSE");
         },
         fail: function (error) {
           console.log("Error:", error);
