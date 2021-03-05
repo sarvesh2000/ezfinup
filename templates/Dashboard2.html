@@ -269,7 +269,7 @@
     function getReliance() {
       console.log("Clicked RELIANCE");
       $.ajax({
-        url: "http://35.232.30.55/?stockname=RELIANCE.NS",
+        url: "http://127.0.0.1:5001/?stockname=RELIANCE.NS",
         success: function (result) {
           // $("#graph").html(result);
           showGraph(result, "RELIANCE NSE");
