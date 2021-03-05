@@ -1,5 +1,5 @@
 from flask import Flask, render_template,request
-import os
+import os, csv
 import numpy as np
 import pandas_datareader as pdr
 import pandas as pd
@@ -8,6 +8,9 @@ import matplotlib.pyplot as plt
 from sklearn.preprocessing import MinMaxScaler
 import numpy as np
 from newsapi import NewsApiClient
+import talib
+import yfinance as yf
+from patterns import candlestick_patterns
 
 # Init
 newsapi = NewsApiClient(api_key='0144a0f2461949b7b8896463a90399f3')
@@ -267,7 +270,52 @@ def login():
 @app.route('/signup')
 def signup():
     return  render_template('create-acc.html')
-    
+
+@app.route('/snapshot')
+def snapshot():
+    with open('datasets/companies.csv') as f:
+        for line in f:
+            if "," not in line:
+                continue
+            symbol = line.split(",")[0] + '.NS'
+            print("Symbol")
+            print(symbol)
+            data = yf.download(symbol, start="2020-01-01", end="2021-03-01")
+            data.to_csv('datasets/daily/{}.csv'.format(symbol))
+
+    return {
+        "code": "success"
+    }
+
+@app.route('/screener')
+def screener():
+    pattern  = request.args.get('pattern', False)
+    stocks = {}
+
+    with open('datasets/companies.csv') as f:
+        for row in csv.reader(f):
+            stocks[row[0]] = {'company': row[1]}
+
+    if pattern:
+        for filename in os.listdir('datasets/daily'):
+            df = pd.read_csv('datasets/daily/{}'.format(filename))
+            pattern_function = getattr(talib, pattern)
+            symbol = filename.split('.')[0]
+
+            try:
+                results = pattern_function(df['Open'], df['High'], df['Low'], df['Close'])
+                last = results.tail(1).values[0]
+
+                if last > 0:
+                    stocks[symbol][pattern] = 'bullish'
+                elif last < 0:
+                    stocks[symbol][pattern] = 'bearish'
+                else:
+                    stocks[symbol][pattern] = None
+            except Exception as e:
+                print('failed on filename: ', filename)
+
+    return render_template('screener.html', candlestick_patterns=candlestick_patterns, stocks=stocks, pattern=pattern)
    
 if __name__ == '__main__':
     app.run(debug=True)
