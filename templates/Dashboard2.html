@@ -245,7 +245,7 @@
     function getIdea() {
       console.log("Clicked IDEA");
       $.ajax({
-        url: "http://35.232.30.55/?stockname=IDEA.NS",
+        url: "http://127.0.0.1:5001/?stockname=IDEA.NS",
         success: function (result) {
           // $("#graph").html(result);
           showGraph(result, "IDEA NSE");
@@ -256,7 +256,7 @@
       });
       console.log("2nd Call");
       $.ajax({
-        url: "http://34.70.172.158:5000/?stockname=IDEA.NS",
+        url: "http://127.0.0.1:5002/?stockname=IDEA.NS",
         success: function (result) {
           console.log("2nd result ", result);
           generateAlgo(result, "IDEA NSE")
