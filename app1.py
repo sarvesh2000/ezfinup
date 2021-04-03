@@ -273,7 +273,7 @@ def about():
 
 @app.route('/dashboard')
 def dashboard():
-    return  render_template('Dashboard2.html')
+    return  render_template('madhu_dashboard.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
