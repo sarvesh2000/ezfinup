@@ -1,10 +1,10 @@
-from flask import Flask, render_template,request, redirect
+from flask import Flask, render_template,request, redirect, session, jsonify
 import os, csv
 import numpy as np
 import pandas_datareader as pdr
 import pandas as pd
 import matplotlib.pyplot as plt
-#import plotly.express as px
+# import plotly.express as px
 from sklearn.preprocessing import MinMaxScaler
 import numpy as np
 from newsapi import NewsApiClient
@@ -221,6 +221,7 @@ def display(start,end,symbol):
     
 
 app = Flask(__name__)
+app.secret_key = 'the random string'
 @app.route('/')
 def home():
     return render_template('index.html')
@@ -280,12 +281,13 @@ def login():
     if request.method == "POST":
         email = request.form.get('email')
         password = request.form.get('password')
-        try:
-            user = firebase.auth().sign_in_with_email_and_password(email, password)
-            jwt = user['idToken']
-            return redirect('/dashboard')
-        except:
-            return {'message': 'There was an error logging in'},400
+        # try:
+        user = firebase.auth().sign_in_with_email_and_password(email, password)
+        jwt = user['idToken']
+        session['user_id'] = jwt
+        return redirect('/dashboard')
+        # except:
+        #     return {'message': 'There was an error logging in'},400
     else:
         return render_template('login.html')
 
@@ -297,15 +299,16 @@ def signup():
         password = request.form.get("password")
         confirm_password = request.form.get("cnf-password")
         if password == confirm_password:
-            try:
-                user = auth.create_user(
-                    email=email,
-                    password=password
-                )
-                session['user_id'] = user.uid
-                return redirect('/dashboard')
-            except:
-                return {'message': 'Error creating user'},400
+            # try:
+            user = auth.create_user(
+                email=email,
+                password=password
+            )
+            # session['user_id'] = user.idToken
+            # return redirect('/dashboard')
+            return jsonify(user)
+            # except:
+            #     return {'message': 'Error creating user'},400
         else:
             return {'message': 'Error creating user. Password and Confirm Password don\'t match'},400
     else:
