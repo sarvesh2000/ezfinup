@@ -11,7 +11,7 @@
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <!-- CSS file -->
-    <link rel="stylesheet" href="{{ url_for('static',filename='styles/about.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/about-style.css') }}">
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
@@ -46,41 +46,46 @@
             </div>
         </nav>
     </header>
-    
+
 
     <div class="container">
         <div class="pt-5 text-white">
             <header class="py-5 mt-5">
                 <h1 class="display-5 text-center">Our Team</h1>
                 <div class="card-deck">
-  <div class="card" style="background-color:black">
-    <img class="card-img-top" src="{{ url_for('static',filename='images/vaish.jpeg') }}" alt="Card image cap"  height="450">
-    <div class="card-body">
-      <h4 class="card-title" align=center><strong>Vaishnav</strong></h4>
-      <h6 align=center>Data Scientist</h5>
-      <p class="card-text">An AI aspirant who learn, code and makes impact.</p>
-      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-    </div>
-  </div>
-  <div class="card" style="background-color:black">
-    <img class="card-img-top" src="{{ url_for('static',filename='images/sidharth.jpeg') }}" alt="Card image cap" height="450">
-    <div class="card-body">
-      <h4 class="card-title" align=center><strong>Sidharth</strong></h4>
-      <h6 align=center>Front-End Developer</h5>
-      <p class="card-text">Designing UI is the most important for any website. Everyone Agrees?? <br>I design em'!</p>
-      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-    </div>
-  </div>
-  <div class="card" style="background-color:black">
-    <img class="card-img-top" src="{{ url_for('static',filename='images/sarvesh.jpeg') }}" alt="Card image cap" height="450">
-    <div class="card-body">
-      <h4 class="card-title" align=center><strong>Sarvesh</strong></h4>
-      <h6 align=center>Full-Stack Web Developer</h5>
-      <p class="card-text">A full-stack web developer who dreams about transforming the field of web-processing and web designing </p>
-      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-    </div>
-  </div>
-</div>
+                    <div class="card" style="background-color:black">
+                        <img class="card-img-top" src="{{ url_for('static',filename='images/vaish.jpeg') }}"
+                            alt="Card image cap" height="450">
+                        <div class="card-body">
+                            <h4 class="card-title" align=center><strong>Vaishnav</strong></h4>
+                            <h6 align=center>Data Scientist</h5>
+                                <p class="card-text">An AI aspirant who learn, code and makes impact.</p>
+                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                        </div>
+                    </div>
+                    <div class="card" style="background-color:black">
+                        <img class="card-img-top" src="{{ url_for('static',filename='images/sidharth.jpeg') }}"
+                            alt="Card image cap" height="450">
+                        <div class="card-body">
+                            <h4 class="card-title" align=center><strong>Sidharth</strong></h4>
+                            <h6 align=center>Front-End Developer</h5>
+                                <p class="card-text">Designing UI is the most important for any website. Everyone
+                                    Agrees?? <br>I design em'!</p>
+                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                        </div>
+                    </div>
+                    <div class="card" style="background-color:black">
+                        <img class="card-img-top" src="{{ url_for('static',filename='images/sarvesh.jpeg') }}"
+                            alt="Card image cap" height="450">
+                        <div class="card-body">
+                            <h4 class="card-title" align=center><strong>Sarvesh</strong></h4>
+                            <h6 align=center>Full-Stack Web Developer</h5>
+                                <p class="card-text">A full-stack web developer who dreams about transforming the field
+                                    of web-processing and web designing </p>
+                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                        </div>
+                    </div>
+                </div>
             </header>
         </div>
     </div>

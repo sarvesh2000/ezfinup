@@ -267,6 +267,14 @@ def login():
 @app.route('/signup')
 def signup():
     return  render_template('create-acc.html')
+
+@app.route('/aboutpage')
+def aboutpage():
+    return render_template('aboutpage.html')
+
+@app.route('/home')
+def homepage():
+    return render_template('homepage.html')
     
    
 if __name__ == '__main__':

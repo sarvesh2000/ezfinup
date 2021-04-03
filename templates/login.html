@@ -9,14 +9,14 @@
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.css'>
-    <link rel="stylesheet" href="{{ url_for('static',filename='styles/login-style.css') }}">
+    <link rel="stylesheet" href="../static/styles/login-style.css">
 
 </head>
 
 <body>
     <!-- navbar -->
     <nav class="navbar navbar-expand-lg navbar-mainbg">
-        <a class="navbar-brand navbar-logo" href="index.html">EZFINUP - Login</a>
+        <a class="navbar-brand navbar-logo" href="index.html">EZFINUP</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <i class="fas fa-bars text-white"></i>
@@ -28,7 +28,11 @@
                     <div class="right"></div>
                 </div>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{url_for('dashboard')}}"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+                    <a class="nav-link" href="{{url_for('homepage')}}"><i class="fas fa-home"></i>Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" style="display: none;" href="{{url_for('dashboard')}}"><i
+                            class="fas fa-tachometer-alt"></i>Dashboard</a>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="{{url_for('login')}}"><i class="far fa-user"></i>Login</a>
@@ -37,13 +41,7 @@
                     <a class="nav-link" href="javascript:void(0);"><i class="far fa-clone"></i>News</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="javascript:void(0);"><i class="fa fa-search"></i>Search</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="javascript:void(0);"><i class="far fa-chart-bar"></i>Charts</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="javascript:void(0);"><i class="far fa-copy"></i>Documents</a>
+                    <a class="nav-link" href="{{url_for('aboutpage')}}"><i class="fas fa-address-card"></i>About us</a>
                 </li>
             </ul>
         </div>
