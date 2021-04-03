@@ -359,6 +359,16 @@ def screener():
                 print('failed on filename: ', filename)
 
     return render_template('screener.html', candlestick_patterns=candlestick_patterns, stocks=stocks, pattern=pattern)
+    return  render_template('create-acc.html')
+
+@app.route('/aboutpage')
+def aboutpage():
+    return render_template('aboutpage.html')
+
+@app.route('/home')
+def homepage():
+    return render_template('homepage.html')
+    
    
 if __name__ == '__main__':
     app.run(debug=True)

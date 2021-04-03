@@ -19,6 +19,7 @@
 <body>
     <div class="wrapper">
         <h1>Create an Account</h1>
+<<<<<<< HEAD
         <div class="box">
             <form class="validate" action="{{url_for('signup')}}", method="POST">
                 <input type="text" name="name" class="Your-name" placeholder="Enter Your Name" required>
@@ -27,11 +28,28 @@
                 <input type="password" name="cnf-password" class="re-enter-password" placeholder="Confirm Password" required>
                 <div style="position: absolute; left: -5000px;" aria-hidden="true">
                     <input type="text" name="name" tabindex="-1" value="">
+=======
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box">
+                    <form class="validate">
+                        <input type="text" name="Your-name" class="Your-name" placeholder="Enter Your Name" required>
+                        <input type="email" name="EMAIL" class="email" id="mce-EMAIL" placeholder="Enter Your Email"
+                            required>
+                        <input type="password" name="password" class="password" placeholder="Enter Your Password"
+                            required>
+                        <input type="password" name="re-enter-password" class="re-enter-password"
+                            placeholder="Confirm Password">
+                        <div style="position: absolute; left: -5000px;" aria-hidden="true">
+                            <input type="text" name="name" tabindex="-1" value="">
+                        </div>
+                        <input type="submit" value="Create" name="create" id="mc-embedded-create" class="mc-button">
+                        <div id="subscribe-result">
+                        </div>
+                    </form>
+>>>>>>> origin/sidharth
                 </div>
-                <input type="submit" value="Create" name="create" id="mc-embedded-create" class="mc-button">
-                <div id="subscribe-result">
-                </div>
-            </form>
+            </div>
         </div>
     </div>
     <!-- Optional JavaScript -->
