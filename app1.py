@@ -1,4 +1,4 @@
-from flask import Flask, render_template,request
+from flask import Flask, render_template,request, redirect
 import os, csv
 import numpy as np
 import pandas_datareader as pdr
@@ -11,6 +11,18 @@ from newsapi import NewsApiClient
 import talib
 import yfinance as yf
 from patterns import candlestick_patterns
+import firebase_admin
+from firebase_admin import credentials, auth
+import pyrebase
+import json
+
+# Firebase Admin Init
+cred = credentials.Certificate('fbAdminConfig.json')
+firebase_admin = firebase_admin.initialize_app(cred)
+
+# Firebase Init
+firebase = pyrebase.initialize_app(json.load(open('fbConfig.json')))
+
 
 # Init
 newsapi = NewsApiClient(api_key='0144a0f2461949b7b8896463a90399f3')
@@ -263,13 +275,41 @@ def about():
 def dashboard():
     return  render_template('Dashboard2.html')
 
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    return render_template('login.html')
+    if request.method == "POST":
+        email = request.form.get('email')
+        password = request.form.get('password')
+        try:
+            user = firebase.auth().sign_in_with_email_and_password(email, password)
+            jwt = user['idToken']
+            return redirect('/dashboard')
+        except:
+            return {'message': 'There was an error logging in'},400
+    else:
+        return render_template('login.html')
 
-@app.route('/signup')
+@app.route('/signup', methods=['GET', 'POST'])
 def signup():
-    return  render_template('create-acc.html')
+    if request.method == "POST":
+        name = request.form.get("name")
+        email = request.form.get("email")
+        password = request.form.get("password")
+        confirm_password = request.form.get("cnf-password")
+        if password == confirm_password:
+            try:
+                user = auth.create_user(
+                    email=email,
+                    password=password
+                )
+                session['user_id'] = user.uid
+                return redirect('/dashboard')
+            except:
+                return {'message': 'Error creating user'},400
+        else:
+            return {'message': 'Error creating user. Password and Confirm Password don\'t match'},400
+    else:
+        return  render_template('create-acc.html')
 
 @app.route('/snapshot')
 def snapshot():
