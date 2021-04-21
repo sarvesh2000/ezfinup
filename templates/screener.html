@@ -38,11 +38,6 @@
                 <td class="{{ stocks[stock][pattern] }}">
                     {{ stocks[stock][pattern]}}
                 </td>
-            <tr>
-                <td colspan="3">
-                    <img src="https://finviz.com/chart.ashx?t={{ stock }}&ty=c&ta=1&p=d&s=l" />
-                </td>
-            </tr>
             {% endif %}
         {% endfor %}
     </table>

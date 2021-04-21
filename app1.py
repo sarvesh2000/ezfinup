@@ -8,6 +8,7 @@ import firebase_admin
 from firebase_admin import credentials, auth
 import pyrebase
 import json
+import pandas as pd
 
 # Firebase Admin Init
 cred = credentials.Certificate('fbAdminConfig.json')
