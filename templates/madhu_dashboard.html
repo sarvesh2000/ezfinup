@@ -132,6 +132,24 @@
                 <small class="text-danger">14436.35</small>
               </div>
             </a>
+            <a href="#" class="list-group-item list-group-item-action mt-1" onclick="getAAPL()">
+              <div class="d-flex w-100 justify-content-between">
+                <h6 class="mb-1 text-danger">
+                  AAPL
+                </h6>
+                <small class="text-secondary">-0.71%</small>
+                <small class="text-danger">14436.35</small>
+              </div>
+            </a>
+            <a href="#" class="list-group-item list-group-item-action mt-1" onclick="getTSLA()">
+              <div class="d-flex w-100 justify-content-between">
+                <h6 class="mb-1 text-success">
+                  TSLA 
+                </h6>
+                <small class="text-secondary">-0.71%</small>
+                <small class="text-success">14436.35</small>
+              </div>
+            </a>
           </div>
           <!-- <nav aria-label="Page navigation example">
             <ul class="pagination">
@@ -356,6 +374,54 @@
         success: function (result) {
           console.log("2nd result ", result);
           generateAlgo(result, "IDEA NSE")
+        },
+        fail: function (error) {
+          console.log("Error:", error);
+        }
+      });
+    }
+    function getAAPL() {
+      console.log("Clicked AAPL");
+      $.ajax({
+        url: "http://127.0.0.1:5001/?stockname=AAPL",
+        success: function (result) {
+          // $("#graph").html(result);
+          showGraph(result, "AAPL");
+        },
+        fail: function (error) {
+          console.log("Error:", error);
+        }
+      });
+      console.log("2nd Call");
+      $.ajax({
+        url: "http://127.0.0.1:5002/?stockname=AAPL",
+        success: function (result) {
+          console.log("2nd result ", result);
+          generateAlgo(result, "AAPL")
+        },
+        fail: function (error) {
+          console.log("Error:", error);
+        }
+      });
+    }
+    function getTSLA() {
+      console.log("Clicked AAPL");
+      $.ajax({
+        url: "http://127.0.0.1:5001/?stockname=TSLA",
+        success: function (result) {
+          // $("#graph").html(result);
+          showGraph(result, "TSLA");
+        },
+        fail: function (error) {
+          console.log("Error:", error);
+        }
+      });
+      console.log("2nd Call");
+      $.ajax({
+        url: "http://127.0.0.1:5002/?stockname=TSLA",
+        success: function (result) {
+          console.log("2nd result ", result);
+          generateAlgo(result, "TSLA")
         },
         fail: function (error) {
           console.log("Error:", error);

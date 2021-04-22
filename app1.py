@@ -28,6 +28,16 @@ key="483bd89d87mshce534f1bd4ba6b0p182fcdjsnf08d8fc19c04"
 app = Flask(__name__)
 app.secret_key = 'the random string'
 
+# @app.before_request
+# def checkAuth():
+#     auth_not_required = ['home', 'homepage', 'login', 'signup', 'aboutpage']
+#     print("Request Endpoint ")
+#     print(request.path.strip('/'))
+#     print("Session User")
+#     print(session['user_id'])
+#     if (request.path.strip('/') not in auth_not_required) and (session['user_id'] == None):
+#         return render_template('404.html')
+
 @app.route('/')
 def home():
     return render_template('index.html')
@@ -72,6 +82,12 @@ def login():
         #     return {'message': 'There was an error logging in'},400
     else:
         return render_template('login.html')
+
+@app.route('/logout')
+def logout():
+    # firebase.auth().signOut()
+    session['user_id'] = None
+    return redirect('/home')
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
