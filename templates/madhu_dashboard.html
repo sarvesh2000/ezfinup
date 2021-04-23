@@ -58,12 +58,12 @@
             </li>
           </ul>
           <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-              <a class="nav-link active" href="{{url_for('homepage')}}"><i class="fas fa-home"></i>Home</a>
+            <li class="nav-item">
+              <a class="nav-link" href="{{url_for('homepage')}}"><i class="fas fa-home"></i>Home</a>
             </li>
             {% if session['user_id'] %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{url_for('dashboard')}}"><i
+                    <li class="nav-item active">
+                        <a class="nav-link active" href="{{url_for('dashboard')}}"><i
                                 class="fas fa-tachometer-alt"></i>Dashboard</a>
                     </li>
                 {% else %}
@@ -77,6 +77,9 @@
                 {% if session['user_id'] %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{url_for('news')}}"><i class="far fa-clone"></i>News</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="{{url_for('screener')}}"><i class="far fa-clone"></i>Screener</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{url_for('logout')}}"><i class="fas fa-address-card"></i>Log Out</a>
