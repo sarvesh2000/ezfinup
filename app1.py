@@ -39,8 +39,8 @@ app.secret_key = 'the random string'
 #         return render_template('404.html')
 
 @app.route('/')
-def home():
-    return render_template('index.html')
+def homepage():
+    return render_template('homepage.html')
 
 @app.route('/news')
 def news():
@@ -62,7 +62,7 @@ def news():
  
     mylist = zip(news, desc, img)
  
-    return render_template('bbc.html', context=mylist)
+    return render_template('bbc2.html', context=mylist)
 
 @app.route('/dashboard')
 def dashboard():
@@ -166,9 +166,9 @@ def screener():
 def aboutpage():
     return render_template('aboutpage.html')
 
-@app.route('/home')
-def homepage():
-    return render_template('homepage.html')
+# @app.route('/home')
+# def homepage():
+#     return render_template('homepage.html')
     
    
 if __name__ == '__main__':

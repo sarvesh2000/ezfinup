@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>EZFINUP</title>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.css'>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css')}}">
+
+</head>
+
+<body>
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-lg navbar-mainbg">
+      <a class="navbar-brand navbar-logo" href="index.html">EZFINUP</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="fas fa-bars text-white"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto">
+              <div class="hori-selector">
+                  <div class="left"></div>
+                  <div class="right"></div>
+              </div>
+              <li class="nav-item">
+                  <a class="nav-link" href="{{url_for('homepage')}}"><i class="fas fa-home"></i>Home</a>
+              </li>
+              {% if session['user_id'] %}
+                  <li class="nav-item">
+                      <a class="nav-link" href="{{url_for('dashboard')}}"><i
+                              class="fas fa-tachometer-alt"></i>Dashboard</a>
+                  </li>
+              {% else %}
+                  <li class="nav-item">
+                      <a class="nav-link" href="{{url_for('login')}}"><i class="far fa-user"></i>Login</a>
+                  </li>
+              {% endif %}
+              <li class="nav-item">
+                  <a class="nav-link" href="{{url_for('aboutpage')}}"><i class="fas fa-address-card"></i>About Us</a>
+              </li>
+              {% if session['user_id'] %}
+                  <li class="nav-item active">
+                      <a class="nav-link active" href="javascript:void(0);"><i class="far fa-clone"></i>News</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="{{url_for('logout')}}"><i class="fas fa-address-card"></i>Log Out</a>
+                  </li>
+              {% endif %}
+          </ul>
+      </div>
+  </nav>
+
+    <div>
+        <div class="container">
+        {% for new, des, i in context %}
+          <div
+            class="card shadow  bg-white rounded m-5 p-2"
+            style="border: none !important; "
+          >
+            <img
+              src="{{i}}"
+              class="card-img-top"
+              alt="..."
+            />
+            <div class="card-body">
+              <h5 class="card-title">News:</h5>
+              <p class="card-text">
+                {{new}}
+              </p>
+              <h4 style="color:white">Description: </h4> <p>{{des}}</p>
+              <a href="https://www.bbc.com/news" class="btn btn-secondary">Read More</a>
+            </div>
+          </div>
+        {% endfor %}
+          <!-- <div
+            class="card mt-3 shadow  bg-white rounded m-5"
+            style="border: none !important; "
+          >
+            <img
+              src="https://images.unsplash.com/photo-1619022070338-bae0964dd9ea?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
+              class="card-img-top"
+              alt="..."
+            />
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">
+                Some quick example text to build on the card title and make up the
+                bulk of the card's content.
+              </p>
+              <a href="#" class="btn btn-secondary">Go somewhere</a>
+            </div>
+          </div>
+        </div>
+      </div> -->
+  
+    <!-- JQuery, bootstrap -->
+    <script src='https://code.jquery.com/jquery-3.4.1.min.js'></script>
+    <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js'></script>
+    <script src="{{url_for('static', filename= 'JS/script.js')}}"></script>
+
+</body>
+
+</html>
